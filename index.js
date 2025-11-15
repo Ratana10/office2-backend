@@ -14,7 +14,7 @@ sequelize.sync({ alter: true })
   .catch(err => console.error('❌ Connection failed:', err));
 
 app.get('/', async (req, res) => {
-  return "Hello office2 backend"
+  res.send("Hello office2 backend")
 });
 app.get('/doc', async (req, res) => {
 const docs = await Document.findAll();
@@ -53,10 +53,6 @@ app.delete("/doc/:id", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
 // 🧩 Update document
 app.put("/doc/:id", async (req, res) => {
   try {
@@ -74,3 +70,13 @@ app.put("/doc/:id", async (req, res) => {
     res.status(500).json({ message: "❌ Failed to update document" });
   }
 });
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
