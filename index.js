@@ -13,6 +13,9 @@ sequelize.sync({ alter: true })
   .then(() => console.log('✅ Database connected successfully!'))
   .catch(err => console.error('❌ Connection failed:', err));
 
+app.get('/', async (req, res) => {
+  return "Hello office2 backend"
+});
 app.get('/doc', async (req, res) => {
 const docs = await Document.findAll();
   res.json({
